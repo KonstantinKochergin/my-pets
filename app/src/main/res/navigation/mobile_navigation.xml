@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/startScreenFragment">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.bottomnavigationexample.ui.home.HomeFragment"
+        android:label="@string/title_home_page"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_food"
+        android:name="com.example.bottomnavigationexample.ui.food.FoodFragment"
+        android:label="@string/food_page_title"
+        tools:layout="@layout/fragment_food" >
+        <action
+            android:id="@+id/action_navigation_food_to_addMealFragment"
+            app:destination="@id/addMealFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_care"
+        android:name="com.example.bottomnavigationexample.ui.care.CareFragment"
+        android:label="@string/title_care_page"
+        tools:layout="@layout/fragment_care" >
+        <action
+            android:id="@+id/action_navigation_care_to_editProcedureFragment"
+            app:destination="@id/editProcedureFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_info"
+        android:name="com.example.bottomnavigationexample.ui.info.InfoFragment"
+        android:label="@string/page_info_title"
+        tools:layout="@layout/fragment_info" >
+        <action
+            android:id="@+id/action_navigation_info_to_documentsEditFragment"
+            app:destination="@id/documentsEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_health"
+        android:name="com.example.bottomnavigationexample.ui.health.HealthFragment"
+        android:label="@string/title_health_page"
+        tools:layout="@layout/fragment_health">
+        <action
+            android:id="@+id/action_navigation_health_to_medicineAddFragment"
+            app:destination="@id/medicineAddFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/startScreenFragment"
+        android:name="com.example.bottomnavigationexample.ui.start.screen.StartScreenFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_start_screen" >
+        <action
+            android:id="@+id/action_startScreenFragment_to_generalScheduleFragment"
+            app:destination="@id/generalScheduleFragment" />
+        <action
+            android:id="@+id/action_startScreenFragment_to_choosePetFragment"
+            app:destination="@id/choosePetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/choosePetFragment"
+        android:name="com.example.bottomnavigationexample.ui.choose.pet.screen.ChoosePetFragment"
+        android:label="@string/choose_pet_page"
+        tools:layout="@layout/fragment_choose_pet" >
+        <action
+            android:id="@+id/action_choosePetFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_choosePetFragment_to_documentsEditFragment"
+            app:destination="@id/documentsEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/generalScheduleFragment"
+        android:name="com.example.bottomnavigationexample.ui.general.schedule.screen.GeneralScheduleFragment"
+        android:label="@string/general_schedule_page_title"
+        tools:layout="@layout/fragment_general_schedule" />
+    <fragment
+        android:id="@+id/documentsEditFragment"
+        android:name="com.example.bottomnavigationexample.info.edit.InfoEditFragment"
+        android:label="@string/info_edit_page_title"
+        tools:layout="@layout/fragment_info_edit" >
+        <action
+            android:id="@+id/action_documentsEditFragment_to_navigation_info"
+            app:destination="@id/navigation_info" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMealFragment"
+        android:name="com.example.bottomnavigationexample.ui.add.meal.AddMealFragment"
+        android:label="@string/add_meal_page_title"
+        tools:layout="@layout/fragment_add_meal" >
+        <action
+            android:id="@+id/action_addMealFragment_to_navigation_food"
+            app:destination="@id/navigation_food" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProcedureFragment"
+        android:name="com.example.bottomnavigationexample.ui.edit.procedure.EditProcedureFragment"
+        android:label="@string/title_care_page" >
+        <action
+            android:id="@+id/action_editProcedureFragment_to_navigation_care"
+            app:destination="@id/navigation_care" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicineAddFragment"
+        android:name="com.example.bottomnavigationexample.ui.medicine.add.MedicineAddFragment"
+        android:label="@string/title_health_page" >
+        <action
+            android:id="@+id/action_medicineAddFragment_to_navigation_health"
+            app:destination="@id/navigation_health" />
+    </fragment>
+</navigation>

@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">My pets</string>
+
+    <string name="title_home_page">Главная</string>
+    <string name="title_tab_food_page">Питание</string>
+    <string name="food_page_title">Приёмы пищи</string>
+    <string name="title_care_page">Уход</string>
+    <string name="title_tab_info_page">Инфо</string>
+    <string name="page_info_title">Информация</string>
+    <string name="title_health_page">Здоровье</string>
+    <string name="choose_pet_page">Выберите питомца</string>
+    <string name="general_schedule_page_title">Общее расписание</string>
+    <string name="info_edit_page_title">Информация</string>
+    <string name="add_meal_page_title">Новый приём пищи</string>
+
+    <string name="add_meal_button">Добавить приём пищи</string>
+    <string name="meal_name_label">Название приёма пищи:</string>
+    <string name="meal_product_label">Продукт:</string>
+    <string name="product_weight_label">Вес(граммы):</string>
+    <string name="meal_time_label">Время приёма:</string>
+    <string name="save">Сохранить</string>
+    <string name="edit">Редактировать</string>
+    <string name="remove">Удалить</string>
+    <string name="procedure_name_label">Название процедуры:</string>
+    <string name="procedure_time_label">Время процедуры:</string>
+    <string name="procedure_interval_label">Интервал повторения(дни):</string>
+    <string name="add_procedure">Добавить процедуру</string>
+    <string name="add_medicine">Добавить</string>
+    <string name="medicine_name_label">Название:</string>
+    <string name="medicine_time_label">Время:</string>
+    <string name="medicine_date_label">Дата:</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="spinner_sex_items">
+        <item>М</item>
+        <item>Ж</item>
+    </string-array>
+    <string-array name="spinner_behaviour_items">
+        <item>Спокойной</item>
+        <item>Агрессивен к животным</item>
+        <item>Агрессивен к людя</item>
+        <item>Агрессивен ко всем</item>
+    </string-array>
+    <string-array name="spinner_castration_items">
+        <item>Да</item>
+        <item>Нет</item>
+    </string-array>
+</resources>

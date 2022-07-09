@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_food"
+        android:icon="@drawable/ic_inactive_food"
+        android:title="@string/title_tab_food_page" />
+
+    <item
+        android:id="@+id/navigation_info"
+        android:icon="@drawable/ic_inactive_documents_icon"
+        android:title="@string/title_tab_info_page"/>
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_inactive_home_icon"
+        android:title="@string/title_home_page" />
+
+    <item
+        android:id="@+id/navigation_care"
+        android:icon="@drawable/ic_inactive_care_icon"
+        android:title="@string/title_care_page" />
+
+    <item
+        android:id="@+id/navigation_health"
+        android:icon="@drawable/ic_inactive_health_icon"
+        android:title="@string/title_health_page"/>
+
+</menu>
