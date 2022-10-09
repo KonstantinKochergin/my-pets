@@ -16,6 +16,7 @@ import com.example.bottomnavigationexample.data.layer.database.MealEntity
 import com.example.bottomnavigationexample.databinding.FragmentAddMealBinding
 import com.example.bottomnavigationexample.databinding.FragmentFoodBinding
 import com.example.bottomnavigationexample.info.edit.InfoEditViewModel
+import com.example.bottomnavigationexample.utils.DateTimeUtils
 import kotlinx.coroutines.*
 
 class AddMealFragment : Fragment() {
@@ -73,12 +74,13 @@ class AddMealFragment : Fragment() {
                 val productWeight = weight
                 val mealTime = binding.mealTimeValue.text.toString()
                 val petId = sharedViewModel.getCurrentPetId()
+                val nextTickMinutesEpoch = DateTimeUtils.parseTimeAndDateToMinutes(mealTime)
                 if (sharedViewModel.getCurrentMealId() == SharedViewModel.CURRENT_MEAL_ID_EMPTY_VALUE) {
-                    val meal = MealEntity(mealName, product, productWeight, mealTime, petId)
+                    val meal = MealEntity(mealName, product, productWeight, mealTime, nextTickMinutesEpoch,false, petId)
                     addMealViewModel.addMeal(view.context, meal)
                 }
                 else {
-                    val meal = MealEntity(mealName, product, productWeight, mealTime, petId, sharedViewModel.getCurrentMealId())
+                    val meal = MealEntity(mealName, product, productWeight, mealTime, nextTickMinutesEpoch, false, petId, sharedViewModel.getCurrentMealId())
                     addMealViewModel.updateMeal(view.context, meal)
                 }
                 withContext(Dispatchers.Main) {

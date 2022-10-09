@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bottomnavigationexample.R
 import com.example.bottomnavigationexample.data.layer.MergedTaskItem
 import com.example.bottomnavigationexample.data.layer.TaskType
+import com.example.bottomnavigationexample.utils.DateTimeUtils
 
 class MergedTasksAdapter(val mergedTasks: List<MergedTaskItem>, val context: Context) : RecyclerView.Adapter<MergedTasksAdapter.ViewHolder>() {
 
@@ -18,11 +19,13 @@ class MergedTasksAdapter(val mergedTasks: List<MergedTaskItem>, val context: Con
         val typeImage: ImageView
         val name: TextView
         val restTime: TextView
+        val overdue: TextView
 
         init {
             typeImage = view.findViewById(R.id.item_type_icon)
             name = view.findViewById(R.id.name)
             restTime = view.findViewById(R.id.rest_time)
+            overdue = view.findViewById(R.id.overdue_value)
         }
     }
 
@@ -32,15 +35,18 @@ class MergedTasksAdapter(val mergedTasks: List<MergedTaskItem>, val context: Con
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = mergedTasks.get(position).name
-        holder.restTime.text = mergedTasks.get(position).restTime
-        if (mergedTasks.get(position).taskType == TaskType.FOOD) {
+        val mergedTask = mergedTasks.get(position)
+        holder.name.text = mergedTask.name
+        val restTimeString = DateTimeUtils.minutesToHHMM(mergedTask.restTimeMinutes)
+        holder.restTime.text = restTimeString
+        holder.overdue.text = if (mergedTask.isOverdue) "true" else "false"
+        if (mergedTask.taskType == TaskType.FOOD) {
             holder.typeImage.setImageDrawable(context.getDrawable(R.drawable.ic_inactive_food))
         }
-        else if (mergedTasks.get(position).taskType == TaskType.CARE) {
+        else if (mergedTask.taskType == TaskType.CARE) {
             holder.typeImage.setImageDrawable(context.getDrawable(R.drawable.ic_inactive_care_icon))
         }
-        else if (mergedTasks.get(position).taskType == TaskType.HEALTH) {
+        else if (mergedTask.taskType == TaskType.HEALTH) {
             holder.typeImage.setImageDrawable(context.getDrawable(R.drawable.ic_inactive_health_icon))
         }
     }

@@ -9,6 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.bottomnavigationexample.R
 import com.example.bottomnavigationexample.SharedViewModel
 import com.example.bottomnavigationexample.data.layer.database.MedicineEntity
@@ -16,7 +18,11 @@ import com.example.bottomnavigationexample.data.layer.database.ProcedureEntity
 import com.example.bottomnavigationexample.databinding.FragmentEditProcedureBinding
 import com.example.bottomnavigationexample.databinding.FragmentMedicineAddBinding
 import com.example.bottomnavigationexample.ui.edit.procedure.EditProcedureViewModel
+import com.example.bottomnavigationexample.utils.DateTimeUtils
+import com.example.bottomnavigationexample.workers.NotificationsWorker
 import kotlinx.coroutines.*
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class MedicineAddFragment : Fragment() {
 
@@ -65,13 +71,20 @@ class MedicineAddFragment : Fragment() {
                 val medicineName = binding.medicineNameValue.text.toString()
                 val medicineTime = binding.medicineTimeValue.text.toString()
                 val medicineDate = binding.medicineDateValue.text.toString()
+                val nextTickMinutesEpoch = DateTimeUtils.parseTimeAndDateToMinutes(medicineTime, medicineDate)
                 val petId = sharedViewModel.getCurrentPetId()
                 if (sharedViewModel.getCurrentMedicineId() == SharedViewModel.CURRENT_MEDICINE_ID_EMPTY_VALUE) {
-                    val medicine = MedicineEntity(medicineName, medicineTime, medicineDate, petId)
+                    val medicine = MedicineEntity(medicineName, medicineTime, medicineDate, nextTickMinutesEpoch, false, petId)
                     medicineAddViewModel.addMedicine(view.context, medicine)
+                    val currentTimeMinutes = Date().time / 1000 / 60
+                    // Планируем задачу
+                    val medWorkRequest = OneTimeWorkRequestBuilder<NotificationsWorker>()
+                        .setInitialDelay(nextTickMinutesEpoch - currentTimeMinutes, TimeUnit.MINUTES)
+                        .build()
+                    WorkManager.getInstance(view.context).enqueue(medWorkRequest)
                 }
                 else {
-                    val medicine = MedicineEntity(medicineName, medicineTime, medicineDate, petId, sharedViewModel.getCurrentMedicineId())
+                    val medicine = MedicineEntity(medicineName, medicineTime, medicineDate, nextTickMinutesEpoch, false, petId, sharedViewModel.getCurrentMedicineId())
                     medicineAddViewModel.updateMedicine(view.context, medicine)
                 }
                 withContext(Dispatchers.Main) {

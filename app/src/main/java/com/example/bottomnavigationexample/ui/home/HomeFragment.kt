@@ -16,6 +16,7 @@ import com.example.bottomnavigationexample.adapters.MergedTasksAdapter
 import com.example.bottomnavigationexample.data.layer.MergedTaskItem
 import com.example.bottomnavigationexample.data.layer.TaskType
 import com.example.bottomnavigationexample.databinding.FragmentHomeBinding
+import com.example.bottomnavigationexample.helpers.NotificationsHelper
 import com.example.bottomnavigationexample.utils.DateTimeUtils
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
@@ -77,60 +78,25 @@ class HomeFragment : Fragment() {
 
             val mergedTaskItems: MutableList<MergedTaskItem> = mutableListOf()
 
-            val sdf = SimpleDateFormat("hh:mm")
-            val currentTime = sdf.format(Date())
-            val currentTimeMinutes = DateTimeUtils.timeStringToMinutes(currentTime)
+            val currentTimeMinutes = Date().time / 1000 / 60
+
             for (mealIndex in meals.indices) {
                 val meal = meals[mealIndex]
-                val mealTimeMinutes = DateTimeUtils.timeStringToMinutes(meal.mealTime)
-                if (mealTimeMinutes <= currentTimeMinutes) {     // ещё впереди
-                    val restTimeMinutes = currentTimeMinutes - mealTimeMinutes
-                    mergedTaskItems.add(MergedTaskItem(TaskType.FOOD, meal.name, restTimeMinutes, DateTimeUtils.minutesToHHMM(restTimeMinutes)))
-                }
-                else {
-                    val restTimeMinutes = DateTimeUtils.daysToMinutes(1) - mealTimeMinutes + currentTimeMinutes
-                    mergedTaskItems.add(MergedTaskItem(TaskType.FOOD, meal.name, restTimeMinutes, DateTimeUtils.minutesToHHMM(restTimeMinutes)))
-                }
+                val restTimeMinutes = meal.nextTickMinutesEpoch - currentTimeMinutes
+                mergedTaskItems.add(MergedTaskItem(TaskType.FOOD, meal.name, restTimeMinutes.toInt(), meal.isOverdue))
             }
 
             // TODO: учитывать procedureIntervalDays
             for (procedureIndex in procedures.indices) {
                 val procedure = procedures[procedureIndex]
-                val procedureTimeMinutes = DateTimeUtils.timeStringToMinutes(procedure.procedureTime)
-                if (procedureTimeMinutes <= currentTimeMinutes) {
-                    val restTimeMinutes = currentTimeMinutes - procedureTimeMinutes
-                    mergedTaskItems.add(MergedTaskItem(TaskType.CARE, procedure.name, restTimeMinutes, DateTimeUtils.minutesToHHMM(restTimeMinutes)))
-                }
-                else {
-                    val restTimeMinutes = DateTimeUtils.daysToMinutes(1) - procedureTimeMinutes + currentTimeMinutes
-                    mergedTaskItems.add(MergedTaskItem(TaskType.CARE, procedure.name, restTimeMinutes, DateTimeUtils.minutesToHHMM(restTimeMinutes)))
-                }
+                val restTimeMinutes = procedure.nextTickMinutesEpoch - currentTimeMinutes
+                mergedTaskItems.add(MergedTaskItem(TaskType.CARE, procedure.name, restTimeMinutes.toInt(), procedure.isOverdue))
             }
 
-            /*
-            val sdfDays = SimpleDateFormat("dd")
-            val currentDay = sdfDays.format(Date()).toInt()
             for (medicineIndex in medicines.indices) {
                 val medicine = medicines[medicineIndex]
-                val daysDiff = DateTimeUtils.getDaysFromDDMMYYYY(medicine.date) - currentDay
-                val procedureTimeMinutes = DateTimeUtils.timeStringToMinutes(medicine.procedureTime)
-                if (procedureTimeMinutes <= currentTimeMinutes) {
-                    val restTimeMinutes = currentTimeMinutes - procedureTimeMinutes
-                    mergedTaskItems.add(MergedTaskItem(TaskType.CARE, procedure.name, restTimeMinutes, DateTimeUtils.minutesToHHMM(restTimeMinutes)))
-                }
-            }
-            */
-            for (medicineIndex in medicines.indices) {
-                val medicine = medicines[medicineIndex]
-                val medicineTimeMinutes = DateTimeUtils.timeStringToMinutes(medicine.time)
-                if (medicineTimeMinutes <= currentTimeMinutes) {
-                    val restTimeMinutes = currentTimeMinutes - medicineTimeMinutes
-                    mergedTaskItems.add(MergedTaskItem(TaskType.HEALTH, medicine.name, restTimeMinutes, DateTimeUtils.minutesToHHMM(restTimeMinutes)))
-                }
-                else {
-                    val restTimeMinutes = DateTimeUtils.daysToMinutes(1) - medicineTimeMinutes + currentTimeMinutes
-                    mergedTaskItems.add(MergedTaskItem(TaskType.HEALTH, medicine.name, restTimeMinutes, DateTimeUtils.minutesToHHMM(restTimeMinutes)))
-                }
+                val restTimeMinutes = medicine.nextTickMinutesEpoch - currentTimeMinutes
+                mergedTaskItems.add(MergedTaskItem(TaskType.HEALTH, medicine.name, restTimeMinutes.toInt(), medicine.isOverdue))
             }
 
             withContext(Dispatchers.Main) {

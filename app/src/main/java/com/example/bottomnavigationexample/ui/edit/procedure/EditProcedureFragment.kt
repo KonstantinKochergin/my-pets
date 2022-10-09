@@ -16,6 +16,7 @@ import com.example.bottomnavigationexample.data.layer.database.ProcedureEntity
 import com.example.bottomnavigationexample.databinding.FragmentAddMealBinding
 import com.example.bottomnavigationexample.databinding.FragmentEditProcedureBinding
 import com.example.bottomnavigationexample.ui.add.meal.AddMealViewModel
+import com.example.bottomnavigationexample.utils.DateTimeUtils
 import kotlinx.coroutines.*
 
 class EditProcedureFragment : Fragment() {
@@ -68,13 +69,14 @@ class EditProcedureFragment : Fragment() {
                 if (binding.procedureIntervalValue.text.toString() != "") {
                     intervalDays = binding.procedureIntervalValue.text.toString().toInt()
                 }
+                val nextTickMinutesEpoch = DateTimeUtils.parseTimeAndDateToMinutes(procedureTime)
                 val petId = sharedViewModel.getCurrentPetId()
                 if (sharedViewModel.getCurrentProcedureId() == SharedViewModel.CURRENT_PROCEDURE_ID_EMPTY_VALUE) {
-                    val procedure = ProcedureEntity(procedureName, procedureTime, intervalDays, petId)
+                    val procedure = ProcedureEntity(procedureName, procedureTime, intervalDays, nextTickMinutesEpoch, false, petId)
                     editProcedureViewModel.addProcedure(view.context, procedure)
                 }
                 else {
-                    val procedure = ProcedureEntity(procedureName, procedureTime, intervalDays,petId, sharedViewModel.getCurrentProcedureId())
+                    val procedure = ProcedureEntity(procedureName, procedureTime, intervalDays, nextTickMinutesEpoch, false, petId, sharedViewModel.getCurrentProcedureId())
                     editProcedureViewModel.updateProcedure(view.context, procedure)
                 }
                 withContext(Dispatchers.Main) {
