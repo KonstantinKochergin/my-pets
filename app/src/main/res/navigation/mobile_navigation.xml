@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.bottomnavigationexample.ui.home.HomeFragment"
+        android:name="com.example.mypets.ui.home.HomeFragment"
         android:label="@string/title_home_page"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_food"
-        android:name="com.example.bottomnavigationexample.ui.food.FoodFragment"
+        android:name="com.example.mypets.ui.food.FoodFragment"
         android:label="@string/food_page_title"
         tools:layout="@layout/fragment_food" >
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_care"
-        android:name="com.example.bottomnavigationexample.ui.care.CareFragment"
+        android:name="com.example.mypets.ui.care.CareFragment"
         android:label="@string/title_care_page"
         tools:layout="@layout/fragment_care" >
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/navigation_info"
-        android:name="com.example.bottomnavigationexample.ui.info.InfoFragment"
+        android:name="com.example.mypets.ui.info.InfoFragment"
         android:label="@string/page_info_title"
         tools:layout="@layout/fragment_info" >
         <action
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/navigation_health"
-        android:name="com.example.bottomnavigationexample.ui.health.HealthFragment"
+        android:name="com.example.mypets.ui.health.HealthFragment"
         android:label="@string/title_health_page"
         tools:layout="@layout/fragment_health">
         <action
@@ -53,7 +53,7 @@
 
     <fragment
         android:id="@+id/startScreenFragment"
-        android:name="com.example.bottomnavigationexample.ui.start.screen.StartScreenFragment"
+        android:name="com.example.mypets.ui.start.screen.StartScreenFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_start_screen" >
         <action
@@ -66,7 +66,7 @@
 
     <fragment
         android:id="@+id/choosePetFragment"
-        android:name="com.example.bottomnavigationexample.ui.choose.pet.screen.ChoosePetFragment"
+        android:name="com.example.mypets.ui.choose.pet.screen.ChoosePetFragment"
         android:label="@string/choose_pet_page"
         tools:layout="@layout/fragment_choose_pet" >
         <action
@@ -78,12 +78,12 @@
     </fragment>
     <fragment
         android:id="@+id/generalScheduleFragment"
-        android:name="com.example.bottomnavigationexample.ui.general.schedule.screen.GeneralScheduleFragment"
+        android:name="com.example.mypets.ui.general.schedule.screen.GeneralScheduleFragment"
         android:label="@string/general_schedule_page_title"
         tools:layout="@layout/fragment_general_schedule" />
     <fragment
         android:id="@+id/documentsEditFragment"
-        android:name="com.example.bottomnavigationexample.info.edit.InfoEditFragment"
+        android:name="com.example.mypets.info.edit.InfoEditFragment"
         android:label="@string/info_edit_page_title"
         tools:layout="@layout/fragment_info_edit" >
         <action
@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/addMealFragment"
-        android:name="com.example.bottomnavigationexample.ui.add.meal.AddMealFragment"
+        android:name="com.example.mypets.ui.add.meal.AddMealFragment"
         android:label="@string/add_meal_page_title"
         tools:layout="@layout/fragment_add_meal" >
         <action
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProcedureFragment"
-        android:name="com.example.bottomnavigationexample.ui.edit.procedure.EditProcedureFragment"
+        android:name="com.example.mypets.ui.edit.procedure.EditProcedureFragment"
         android:label="@string/title_care_page" >
         <action
             android:id="@+id/action_editProcedureFragment_to_navigation_care"
@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/medicineAddFragment"
-        android:name="com.example.bottomnavigationexample.ui.medicine.add.MedicineAddFragment"
+        android:name="com.example.mypets.ui.medicine.add.MedicineAddFragment"
         android:label="@string/title_health_page" >
         <action
             android:id="@+id/action_medicineAddFragment_to_navigation_health"
