@@ -96,26 +96,25 @@ class HomeFragment : Fragment() {
             for (mealIndex in meals.indices) {
                 val meal = meals[mealIndex]
                 val restTimeMinutes = meal.nextTickMinutesEpoch - currentTimeMinutes
-                mergedTaskItems.add(MergedTaskItem(meal.id, meal.petId, TaskType.FOOD, meal.name, restTimeMinutes.toInt(), meal.isOverdue))
+                mergedTaskItems.add(MergedTaskItem(meal.id, meal.petId, null, TaskType.FOOD, meal.name, restTimeMinutes.toInt(), meal.isOverdue))
             }
 
-            // TODO: учитывать procedureIntervalDays
             for (procedureIndex in procedures.indices) {
                 val procedure = procedures[procedureIndex]
                 val restTimeMinutes = procedure.nextTickMinutesEpoch - currentTimeMinutes
-                mergedTaskItems.add(MergedTaskItem(procedure.id, procedure.petId, TaskType.CARE, procedure.name, restTimeMinutes.toInt(), procedure.isOverdue))
+                mergedTaskItems.add(MergedTaskItem(procedure.id, procedure.petId, null, TaskType.CARE, procedure.name, restTimeMinutes.toInt(), procedure.isOverdue))
             }
 
             for (medicineIndex in medicines.indices) {
                 val medicine = medicines[medicineIndex]
                 val restTimeMinutes = medicine.nextTickMinutesEpoch - currentTimeMinutes
-                mergedTaskItems.add(MergedTaskItem(medicine.id, medicine.petId, TaskType.HEALTH, medicine.name, restTimeMinutes.toInt(), medicine.isOverdue))
+                mergedTaskItems.add(MergedTaskItem(medicine.id, medicine.petId, null, TaskType.HEALTH, medicine.name, restTimeMinutes.toInt(), medicine.isOverdue))
             }
 
             val sortedMergedTasks = mergedTaskItems.sortedWith(compareBy { it.restTimeMinutes })
 
             withContext(Dispatchers.Main) {
-                mergedTasksRv.adapter = MergedTasksAdapter(sortedMergedTasks, view.context, thisFragment, view)
+                mergedTasksRv.adapter = MergedTasksAdapter(sortedMergedTasks, view.context, thisFragment, null, view)
             }
         }
     }

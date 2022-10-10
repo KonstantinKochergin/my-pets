@@ -66,6 +66,10 @@ class SharedViewModel : ViewModel() {
         return currentMealId
     }
 
+    suspend fun getAllPetsUnreactive(context: Context) = withContext(Dispatchers.Default) {
+        return@withContext AppDatabase.getDatabase(context).petsDao().getAllUnreactive()
+    }
+
     suspend fun getPetById(context: Context, petId: Int) = withContext(Dispatchers.Default) {
         return@withContext AppDatabase.getDatabase(context).petsDao().getPetById(petId)
     }
@@ -75,6 +79,13 @@ class SharedViewModel : ViewModel() {
             // TODO: реализовать проверку на отсутствие текущего питомца
         }
         return@withContext AppDatabase.getDatabase(context).mealsDao().getAllByPetId(currentPetId)
+    }
+
+    suspend fun getPetMealsUnreactive(context: Context, petId: Int) = withContext(Dispatchers.Default) {
+        if (currentPetId == CURRENT_PET_ID_EMPTY_VALUE) {
+            // TODO: реализовать проверку на отсутствие текущего питомца
+        }
+        return@withContext AppDatabase.getDatabase(context).mealsDao().getAllByPetIdUnreactive(petId)
     }
 
     suspend fun getCurrentPetMealsUnreactive(context: Context) = withContext(Dispatchers.Default) {
@@ -91,6 +102,13 @@ class SharedViewModel : ViewModel() {
         return@withContext AppDatabase.getDatabase(context).proceduresDao().getAllByPetId(currentPetId)
     }
 
+    suspend fun getPetProceduresUnreactive(context: Context, petId: Int) = withContext(Dispatchers.Default) {
+        if (currentPetId == CURRENT_PET_ID_EMPTY_VALUE) {
+            // TODO: реализовать проверку на отсутствие текущего питомца
+        }
+        return@withContext AppDatabase.getDatabase(context).proceduresDao().getAllByPetIdUnreactive(petId)
+    }
+
     suspend fun getCurrentPetProceduresUnreactive(context: Context) = withContext(Dispatchers.Default) {
         if (currentPetId == CURRENT_PET_ID_EMPTY_VALUE) {
             // TODO: реализовать проверку на отсутствие текущего питомца
@@ -103,6 +121,13 @@ class SharedViewModel : ViewModel() {
             // TODO: реализовать проверку на отсутствие текущего питомца
         }
         return@withContext AppDatabase.getDatabase(context).medicineDao().getAllByPetId(currentPetId)
+    }
+
+    suspend fun getPetMedicineUnreactive(context: Context, petId: Int) = withContext(Dispatchers.Default) {
+        if (currentPetId == CURRENT_PET_ID_EMPTY_VALUE) {
+            // TODO: реализовать проверку на отсутствие текущего питомца
+        }
+        return@withContext AppDatabase.getDatabase(context).medicineDao().getAllByPetIdUnreactive(petId)
     }
 
     suspend fun getCurrentPetMedicineUnreactive(context: Context) = withContext(Dispatchers.Default) {

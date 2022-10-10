@@ -18,6 +18,7 @@ import com.example.bottomnavigationexample.R
 import com.example.bottomnavigationexample.data.layer.MergedTaskItem
 import com.example.bottomnavigationexample.data.layer.TaskType
 import com.example.bottomnavigationexample.data.layer.database.AppDatabase
+import com.example.bottomnavigationexample.ui.general.schedule.screen.GeneralScheduleFragment
 import com.example.bottomnavigationexample.ui.home.HomeFragment
 import com.example.bottomnavigationexample.utils.DateTimeUtils
 import com.example.bottomnavigationexample.workers.NotificationsWorker
@@ -32,7 +33,8 @@ import java.util.concurrent.TimeUnit
 class MergedTasksAdapter(
     val mergedTasks: List<MergedTaskItem>,
     val context: Context,
-    val homeFragment: HomeFragment,
+    val homeFragment: HomeFragment?,
+    val generalSheduleFragment: GeneralScheduleFragment?,
     val viewFromFragment: View
 ) : RecyclerView.Adapter<MergedTasksAdapter.ViewHolder>() {
 
@@ -41,12 +43,14 @@ class MergedTasksAdapter(
         val typeImage: ImageView
         val name: TextView
         val restTime: TextView
+        val petName: TextView
 
         init {
             root = view.findViewById(R.id.merged_item_root)
             typeImage = view.findViewById(R.id.item_type_icon)
             name = view.findViewById(R.id.name)
             restTime = view.findViewById(R.id.rest_time)
+            petName = view.findViewById(R.id.pet_name)
         }
     }
 
@@ -64,6 +68,13 @@ class MergedTasksAdapter(
         if (mergedTask.isOverdue) {
             holder.root.setBackgroundColor(Color.parseColor("#A64543"))
             holder.restTime.visibility = View.GONE
+        }
+
+        if (mergedTask.petName != null) {
+            holder.petName.text = mergedTask.petName
+        }
+        else {
+            holder.petName.visibility = View.GONE
         }
 
         if (mergedTask.taskType == TaskType.FOOD) {
@@ -98,7 +109,12 @@ class MergedTasksAdapter(
                             .build()
                         WorkManager.getInstance(holder.root.context).enqueue(mealWorkRequest)
                         withContext(Dispatchers.Main) {
-                            homeFragment.getAndRenderMergedItems(viewFromFragment)
+                            if (homeFragment != null) {
+                                homeFragment.getAndRenderMergedItems(viewFromFragment)
+                            }
+                            else if (generalSheduleFragment != null) {
+                                generalSheduleFragment.getAndRenderMergedItems(viewFromFragment)
+                            }
                         }
                     }
                     else if (mergedTask.taskType == TaskType.CARE) {
@@ -118,13 +134,23 @@ class MergedTasksAdapter(
                             .build()
                         WorkManager.getInstance(holder.root.context).enqueue(procedureWorkRequest)
                         withContext(Dispatchers.Main) {
-                            homeFragment.getAndRenderMergedItems(viewFromFragment)
+                            if (homeFragment != null) {
+                                homeFragment.getAndRenderMergedItems(viewFromFragment)
+                            }
+                            else if (generalSheduleFragment != null) {
+                                generalSheduleFragment.getAndRenderMergedItems(viewFromFragment)
+                            }
                         }
                     }
                     else if (mergedTask.taskType == TaskType.HEALTH) {
                         AppDatabase.getDatabase(holder.root.context).medicineDao().removeMedicineById(mergedTask.taskId)
                         withContext(Dispatchers.Main) {
-                            homeFragment.getAndRenderMergedItems(viewFromFragment)
+                            if (homeFragment != null) {
+                                homeFragment.getAndRenderMergedItems(viewFromFragment)
+                            }
+                            else if (generalSheduleFragment != null) {
+                                generalSheduleFragment.getAndRenderMergedItems(viewFromFragment)
+                            }
                         }
                     }
                 }

@@ -9,6 +9,9 @@ interface PetsDao {
     @Query("SELECT * from pets")
     fun getAll() : LiveData<List<PetEntity>>
 
+    @Query("SELECT * from pets")
+    fun getAllUnreactive() : List<PetEntity>
+
     @Query("SELECT * from pets WHERE id=:id")
     fun getPetById(id: Int) : LiveData<PetEntity>
 
