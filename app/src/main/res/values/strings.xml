@@ -37,9 +37,9 @@
         <item>Ж</item>
     </string-array>
     <string-array name="spinner_behaviour_items">
-        <item>Спокойной</item>
+        <item>Спокойный</item>
         <item>Агрессивен к животным</item>
-        <item>Агрессивен к людя</item>
+        <item>Агрессивен к людям</item>
         <item>Агрессивен ко всем</item>
     </string-array>
     <string-array name="spinner_castration_items">

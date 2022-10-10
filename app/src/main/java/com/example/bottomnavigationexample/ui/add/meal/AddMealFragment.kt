@@ -10,14 +10,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.bottomnavigationexample.R
 import com.example.bottomnavigationexample.SharedViewModel
+import com.example.bottomnavigationexample.data.layer.TaskType
 import com.example.bottomnavigationexample.data.layer.database.MealEntity
 import com.example.bottomnavigationexample.databinding.FragmentAddMealBinding
 import com.example.bottomnavigationexample.databinding.FragmentFoodBinding
 import com.example.bottomnavigationexample.info.edit.InfoEditViewModel
 import com.example.bottomnavigationexample.utils.DateTimeUtils
+import com.example.bottomnavigationexample.workers.NotificationsWorker
 import kotlinx.coroutines.*
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class AddMealFragment : Fragment() {
 
@@ -75,9 +82,21 @@ class AddMealFragment : Fragment() {
                 val mealTime = binding.mealTimeValue.text.toString()
                 val petId = sharedViewModel.getCurrentPetId()
                 val nextTickMinutesEpoch = DateTimeUtils.parseTimeAndDateToMinutes(mealTime)
+                val currentTimeMinutes = Date().time / 1000 / 60
                 if (sharedViewModel.getCurrentMealId() == SharedViewModel.CURRENT_MEAL_ID_EMPTY_VALUE) {
                     val meal = MealEntity(mealName, product, productWeight, mealTime, nextTickMinutesEpoch,false, petId)
-                    addMealViewModel.addMeal(view.context, meal)
+                    val taskId = addMealViewModel.addMeal(view.context, meal)
+                    // Планирование задачи (уведомление + isOverdue = true)
+                    val workerData = Data.Builder()
+                    workerData.putInt(NotificationsWorker.TASK_TYPE_KEY, TaskType.FOOD.value)
+                    workerData.putInt(NotificationsWorker.TASK_ID_KEY, taskId.toInt())
+                    workerData.putInt(NotificationsWorker.PET_ID_KEY, petId)
+                    // Планируем задачу
+                    val mealWorkRequest = OneTimeWorkRequestBuilder<NotificationsWorker>()
+                        .setInitialDelay(nextTickMinutesEpoch - currentTimeMinutes, TimeUnit.MINUTES)
+                        .setInputData(workerData.build())
+                        .build()
+                    WorkManager.getInstance(view.context).enqueue(mealWorkRequest)
                 }
                 else {
                     val meal = MealEntity(mealName, product, productWeight, mealTime, nextTickMinutesEpoch, false, petId, sharedViewModel.getCurrentMealId())

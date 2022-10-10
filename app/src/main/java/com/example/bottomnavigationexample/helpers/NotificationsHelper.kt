@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.bottomnavigationexample.MainActivity
 import com.example.bottomnavigationexample.R
+import com.example.bottomnavigationexample.workers.NotificationsWorker
 
 class NotificationsHelper(val context: Context) {
     private val CHANNEL_ID = "my_pets_notifications_channel_id"
@@ -25,12 +26,13 @@ class NotificationsHelper(val context: Context) {
         }
     }
 
-    fun createNotification(title: String, message: String){
+    fun createNotification(title: String, message: String, petId: Int){
         createNotificationChannel()
         val intent = Intent(context, MainActivity:: class.java).apply{
+            putExtra(NotificationsWorker.PET_ID_KEY, petId)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.dog_placeholder)
             .setContentTitle(title)

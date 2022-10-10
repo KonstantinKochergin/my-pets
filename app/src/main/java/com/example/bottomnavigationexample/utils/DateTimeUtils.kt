@@ -66,5 +66,15 @@ class DateTimeUtils {
             return "${day}.${month}.${year}"
         }
 
+        fun getFormattedDatePlusIntervalString(date: Date, intervalDays: Int) : String {
+            val calendar = Calendar.getInstance()
+            calendar.time = date
+            calendar.add(Calendar.DAY_OF_MONTH, intervalDays)
+            val day = formatCalendarNumberValue(calendar.get(Calendar.DAY_OF_MONTH))
+            val month = formatCalendarNumberValue(calendar.get(Calendar.MONTH) + 1)
+            val year = calendar.get(Calendar.YEAR)
+            return "${day}.${month}.${year}"
+        }
+
     }
 }

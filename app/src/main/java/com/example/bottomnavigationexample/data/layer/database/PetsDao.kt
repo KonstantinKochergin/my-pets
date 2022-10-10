@@ -12,6 +12,9 @@ interface PetsDao {
     @Query("SELECT * from pets WHERE id=:id")
     fun getPetById(id: Int) : LiveData<PetEntity>
 
+    @Query("SELECT * from pets WHERE id=:id")
+    fun getPetByIdSync(id: Int) : PetEntity
+
     @Insert
     fun addPet(pet: PetEntity) : Long
 

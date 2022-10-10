@@ -9,10 +9,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.bottomnavigationexample.R
 import com.example.bottomnavigationexample.SharedViewModel
+import com.example.bottomnavigationexample.data.layer.TaskType
 import com.example.bottomnavigationexample.data.layer.database.MedicineEntity
 import com.example.bottomnavigationexample.data.layer.database.ProcedureEntity
 import com.example.bottomnavigationexample.databinding.FragmentEditProcedureBinding
@@ -75,11 +77,16 @@ class MedicineAddFragment : Fragment() {
                 val petId = sharedViewModel.getCurrentPetId()
                 if (sharedViewModel.getCurrentMedicineId() == SharedViewModel.CURRENT_MEDICINE_ID_EMPTY_VALUE) {
                     val medicine = MedicineEntity(medicineName, medicineTime, medicineDate, nextTickMinutesEpoch, false, petId)
-                    medicineAddViewModel.addMedicine(view.context, medicine)
+                    val taskId = medicineAddViewModel.addMedicine(view.context, medicine)
                     val currentTimeMinutes = Date().time / 1000 / 60
+                    val workerData = Data.Builder()
+                    workerData.putInt(NotificationsWorker.TASK_TYPE_KEY, TaskType.HEALTH.value)
+                    workerData.putInt(NotificationsWorker.TASK_ID_KEY, taskId.toInt())
+                    workerData.putInt(NotificationsWorker.PET_ID_KEY, petId)
                     // Планируем задачу
                     val medWorkRequest = OneTimeWorkRequestBuilder<NotificationsWorker>()
                         .setInitialDelay(nextTickMinutesEpoch - currentTimeMinutes, TimeUnit.MINUTES)
+                        .setInputData(workerData.build())
                         .build()
                     WorkManager.getInstance(view.context).enqueue(medWorkRequest)
                 }

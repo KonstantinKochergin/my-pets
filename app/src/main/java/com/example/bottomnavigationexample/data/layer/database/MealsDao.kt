@@ -18,11 +18,20 @@ interface MealsDao {
     @Query("SELECT * from meals WHERE id = :mealId")
     fun getMealById(mealId: Int) : LiveData<MealEntity>
 
+    @Query("SELECT * from meals WHERE id = :mealId")
+    fun getMealByIdSync(mealId: Int) : MealEntity
+
     @Insert
     fun addMeal(meal: MealEntity) : Long
 
     @Update
     fun updateMeal(meal: MealEntity)
+
+    @Query("UPDATE meals SET isOverdue = :isOverdue WHERE id = :id")
+    fun updateIsOverdue(id: Int, isOverdue: Boolean)
+
+    @Query("UPDATE meals SET isOverdue = 0, nextTickMinutesEpoch = :nextTickMinutesEpoch WHERE id = :id")
+    fun refreshMeal(id: Int, nextTickMinutesEpoch: Long)
 
     @Delete
     fun removeMeal(meal: MealEntity)
