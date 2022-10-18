@@ -9,6 +9,9 @@ interface ProceduresDao {
     @Query("SELECT * from procedures")
     fun getAll() : LiveData<List<ProcedureEntity>>
 
+    @Query("SELECT * from procedures")
+    fun getAllUnreactive() : List<ProcedureEntity>
+
     @Query("SELECT * from procedures WHERE petId = :petId")
     fun getAllByPetId(petId: Int) : LiveData<List<ProcedureEntity>>
 

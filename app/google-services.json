@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "871737649424",
+    "firebase_url": "https://my-pets-studing-work-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "my-pets-studing-work",
+    "storage_bucket": "my-pets-studing-work.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871737649424:android:4509e42d0a18cc19795d95",
+        "android_client_info": {
+          "package_name": "com.example.mypets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871737649424-0ehvff7h0ca5m85uc45dnv41p8kiehfb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvbGLHYMqQYutoHs7x391Io0nDWsXoBds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871737649424-0ehvff7h0ca5m85uc45dnv41p8kiehfb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

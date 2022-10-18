@@ -9,6 +9,9 @@ interface MedicineDao {
     @Query("SELECT * from medicine")
     fun getAll() : LiveData<List<MedicineEntity>>
 
+    @Query("SELECT * from medicine")
+    fun getAllUnreactive() : List<MedicineEntity>
+
     @Query("SELECT * from medicine WHERE petId = :petId")
     fun getAllByPetId(petId: Int) : LiveData<List<MedicineEntity>>
 

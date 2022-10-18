@@ -12,6 +12,7 @@
     <string name="general_schedule_page_title">Общее расписание</string>
     <string name="info_edit_page_title">Информация</string>
     <string name="add_meal_page_title">Новый приём пищи</string>
+    <string name="sync_page_title">Синхронизация</string>
 
     <string name="add_meal_button">Добавить приём пищи</string>
     <string name="meal_name_label">Название приёма пищи:</string>

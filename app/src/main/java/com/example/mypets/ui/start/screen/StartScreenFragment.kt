@@ -29,6 +29,7 @@ class StartScreenFragment : Fragment() {
 
         val buttonToPetsList = binding.choosePetButton
         val buttonToGeneralSchedule = binding.generalScheduleButton
+        val buttonToSynchronization = binding.syncButton
 
         buttonToPetsList.setOnClickListener{
             navController.navigate(R.id.action_startScreenFragment_to_choosePetFragment)
@@ -36,6 +37,10 @@ class StartScreenFragment : Fragment() {
 
         buttonToGeneralSchedule.setOnClickListener{
             navController.navigate(R.id.action_startScreenFragment_to_generalScheduleFragment)
+        }
+
+        buttonToSynchronization.setOnClickListener {
+            navController.navigate(R.id.action_startScreenFragment_to_synchronizationFragment)
         }
 
         return binding.root

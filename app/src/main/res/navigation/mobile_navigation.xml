@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_startScreenFragment_to_choosePetFragment"
             app:destination="@id/choosePetFragment" />
+        <action
+            android:id="@+id/action_startScreenFragment_to_synchronizationFragment"
+            app:destination="@id/synchronizationFragment" />
     </fragment>
 
     <fragment
@@ -115,4 +118,8 @@
             android:id="@+id/action_medicineAddFragment_to_navigation_health"
             app:destination="@id/navigation_health" />
     </fragment>
+    <fragment
+        android:id="@+id/synchronizationFragment"
+        android:name="com.example.mypets.ui.synchronization.SynchronizationFragment"
+        android:label="@string/sync_page_title" />
 </navigation>
